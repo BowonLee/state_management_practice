@@ -6,7 +6,23 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$singleValueHash() => r'4c2ea320ed250c4f98e57d4e43c9776227616978';
+String _$valueNotifierHash() => r'452b259acd2ec4211520f85058abc6da8c20c416';
+
+/// See also [ValueNotifier].
+@ProviderFor(ValueNotifier)
+final valueNotifierProvider =
+    AutoDisposeNotifierProvider<ValueNotifier, List<String>>.internal(
+  ValueNotifier.new,
+  name: r'valueNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$valueNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$ValueNotifier = AutoDisposeNotifier<List<String>>;
+String _$singleValueHash() => r'689092d17dce60a7fc8e0f5452e74ec5d0af8324';
 
 /// See also [singleValue].
 @ProviderFor(singleValue)
@@ -20,7 +36,112 @@ final singleValueProvider = AutoDisposeProvider<String>.internal(
 );
 
 typedef SingleValueRef = AutoDisposeProviderRef<String>;
-String _$futureValueHash() => r'605c7b87c6ed256a11c070a727c44ff5cccb76a8';
+String _$singleValueWithParamHash() =>
+    r'033acc2e330b3ca4399232a53a5b76764e88a5b3';
+
+/// Copied from Dart SDK
+class _SystemHash {
+  _SystemHash._();
+
+  static int combine(int hash, int value) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + value);
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
+    return hash ^ (hash >> 6);
+  }
+
+  static int finish(int hash) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
+    // ignore: parameter_assignments
+    hash = hash ^ (hash >> 11);
+    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
+  }
+}
+
+typedef SingleValueWithParamRef = AutoDisposeProviderRef<String>;
+
+/// See also [singleValueWithParam].
+@ProviderFor(singleValueWithParam)
+const singleValueWithParamProvider = SingleValueWithParamFamily();
+
+/// See also [singleValueWithParam].
+class SingleValueWithParamFamily extends Family<String> {
+  /// See also [singleValueWithParam].
+  const SingleValueWithParamFamily();
+
+  /// See also [singleValueWithParam].
+  SingleValueWithParamProvider call({
+    required int param,
+  }) {
+    return SingleValueWithParamProvider(
+      param: param,
+    );
+  }
+
+  @override
+  SingleValueWithParamProvider getProviderOverride(
+    covariant SingleValueWithParamProvider provider,
+  ) {
+    return call(
+      param: provider.param,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'singleValueWithParamProvider';
+}
+
+/// See also [singleValueWithParam].
+class SingleValueWithParamProvider extends AutoDisposeProvider<String> {
+  /// See also [singleValueWithParam].
+  SingleValueWithParamProvider({
+    required this.param,
+  }) : super.internal(
+          (ref) => singleValueWithParam(
+            ref,
+            param: param,
+          ),
+          from: singleValueWithParamProvider,
+          name: r'singleValueWithParamProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$singleValueWithParamHash,
+          dependencies: SingleValueWithParamFamily._dependencies,
+          allTransitiveDependencies:
+              SingleValueWithParamFamily._allTransitiveDependencies,
+        );
+
+  final int param;
+
+  @override
+  bool operator ==(Object other) {
+    return other is SingleValueWithParamProvider && other.param == param;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, param.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+String _$futureValueHash() => r'085d9093bd952a5cc5d11b3fcb1f5a514d1e7fa1';
 
 /// See also [futureValue].
 @ProviderFor(futureValue)
@@ -34,7 +155,7 @@ final futureValueProvider = AutoDisposeFutureProvider<String>.internal(
 );
 
 typedef FutureValueRef = AutoDisposeFutureProviderRef<String>;
-String _$streamValueHash() => r'421f2e7d15be377ebfeb1b392f3c567607664a67';
+String _$streamValueHash() => r'aa12ac9e9a013e8dd147d8477631f7e63dd59ed2';
 
 /// See also [streamValue].
 @ProviderFor(streamValue)
