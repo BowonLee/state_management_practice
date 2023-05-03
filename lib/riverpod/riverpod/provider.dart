@@ -31,17 +31,57 @@ Stream<int> streamValue(Ref ref) {
       return computationCount;
     },
   );
-  // return Stream.fromIterable([1, 2, 3]);
 }
 
 @riverpod
 class ValueNotifier extends _$ValueNotifier {
   @override
-  List<String> build() {
-    /// build 의 반환값에 따라서 값이 변경되며, 여기 설정 된 기본 값이  state의 초기값이다.
-    /// init 관련 값들을 여기에서 셋팅하면 된다.
+  int build() {
+    /// initial
 
-    ref.watch(futureValueProvider);
-    return [];
+    Logger().i("build Value Notifier");
+    return 0;
+  }
+
+  void increment() {
+    state++;
+  }
+
+  void decrement() {
+    state--;
+  }
+}
+
+@riverpod
+class FutureNotifier extends _$FutureNotifier {
+  int _counter = 0;
+
+  @override
+  FutureOr<int> build() async {
+    await Future.delayed(Duration(seconds: 1));
+
+    return _counter;
+  }
+
+  void increment() async {
+    state = const AsyncValue.loading();
+    _counter++;
+    await Future.delayed(Duration(seconds: 1));
+    state = AsyncValue.data(_counter);
+  }
+
+  void decrement() async {
+    state = const AsyncValue.loading();
+    _counter--;
+    await Future.delayed(Duration(seconds: 1));
+    state = AsyncValue.data(_counter);
+  }
+}
+
+@riverpod
+class StreamNotifier extends _$StreamNotifier {
+  @override
+  Stream<int> build() async* {
+    yield 0;
   }
 }

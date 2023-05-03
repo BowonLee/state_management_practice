@@ -6,12 +6,12 @@ part of 'provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$valueNotifierHash() => r'452b259acd2ec4211520f85058abc6da8c20c416';
+String _$valueNotifierHash() => r'302c2ee8dc132139311cf26ac123af837a6b8a69';
 
 /// See also [ValueNotifier].
 @ProviderFor(ValueNotifier)
 final valueNotifierProvider =
-    AutoDisposeNotifierProvider<ValueNotifier, List<String>>.internal(
+    AutoDisposeNotifierProvider<ValueNotifier, int>.internal(
   ValueNotifier.new,
   name: r'valueNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -21,7 +21,39 @@ final valueNotifierProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$ValueNotifier = AutoDisposeNotifier<List<String>>;
+typedef _$ValueNotifier = AutoDisposeNotifier<int>;
+String _$futureNotifierHash() => r'428e0af86f9935ce2f36bfcca66aaeedd81e09ec';
+
+/// See also [FutureNotifier].
+@ProviderFor(FutureNotifier)
+final futureNotifierProvider =
+    AutoDisposeAsyncNotifierProvider<FutureNotifier, int>.internal(
+  FutureNotifier.new,
+  name: r'futureNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$futureNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$FutureNotifier = AutoDisposeAsyncNotifier<int>;
+String _$streamNotifierHash() => r'5f985085c744e97127a0dc63ba1c027d4600b4ea';
+
+/// See also [StreamNotifier].
+@ProviderFor(StreamNotifier)
+final streamNotifierProvider =
+    AutoDisposeNotifierProvider<StreamNotifier, Stream<int>>.internal(
+  StreamNotifier.new,
+  name: r'streamNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$streamNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$StreamNotifier = AutoDisposeNotifier<Stream<int>>;
 String _$singleValueHash() => r'689092d17dce60a7fc8e0f5452e74ec5d0af8324';
 
 /// See also [singleValue].

@@ -59,7 +59,25 @@ class RiverpodMain extends StatelessWidget {
                         builder: (context) => const _StreamScreen(),
                       ));
                 },
-                child: const Text("stream"))
+                child: const Text("stream")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const _ValueNotifierScreen(),
+                      ));
+                },
+                child: const Text("value notifier")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const _FutureValueNotifierScreen(),
+                      ));
+                },
+                child: const Text("future value notifier")),
           ],
         ));
   }
@@ -141,6 +159,86 @@ class _StreamScreen extends ConsumerWidget {
           child: Text("${snapshot.data}"),
         ),
         stream: stream,
+      ),
+    );
+  }
+}
+
+class _ValueNotifierScreen extends ConsumerWidget {
+  const _ValueNotifierScreen({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final valueNotifier = ref.watch(valueNotifierProvider.notifier);
+    final valueState = ref.watch(valueNotifierProvider);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("value notifier"),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Center(
+            child: Text("state is $valueState"),
+          ),
+          ElevatedButton(
+              onPressed: () {
+                valueNotifier.increment();
+              },
+              child: const Text("increment")),
+          ElevatedButton(
+              onPressed: () {
+                valueNotifier.decrement();
+              },
+              child: const Text("decrement")),
+        ],
+      ),
+    );
+  }
+}
+
+class _FutureValueNotifierScreen extends ConsumerWidget {
+  const _FutureValueNotifierScreen({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final valueNotifier = ref.watch(futureNotifierProvider.notifier);
+    final valueState = ref.watch(futureNotifierProvider);
+
+    /// state
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("future value notifier"),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Center(
+            child: valueState.when(
+              data: (data) => Text("value is $data"),
+              error: (error, stackTrace) => Text("error"),
+              loading: () => CircularProgressIndicator(),
+            ),
+          ),
+          ElevatedButton(
+              onPressed: () {
+                valueNotifier.increment();
+              },
+              child: const Text("increment")),
+          ElevatedButton(
+              onPressed: () {
+                valueNotifier.decrement();
+              },
+              child: const Text("decrement")),
+        ],
       ),
     );
   }
