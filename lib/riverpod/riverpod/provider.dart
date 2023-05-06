@@ -19,7 +19,7 @@ String singleValueWithParam(Ref ref, {required int param}) {
 Future<String> futureValue(Ref ref) {
   return Future.delayed(
     const Duration(milliseconds: 500),
-    () => "Future is here",
+        () => "Future is here",
   );
 }
 
@@ -27,7 +27,7 @@ Future<String> futureValue(Ref ref) {
 Stream<int> streamValue(Ref ref) {
   return Stream.periodic(
     const Duration(milliseconds: 500),
-    (computationCount) {
+        (computationCount) {
       return computationCount;
     },
   );
@@ -50,6 +50,17 @@ class ValueNotifier extends _$ValueNotifier {
   void decrement() {
     state--;
   }
+}
+
+@riverpod
+class NoneValueNotifier extends _$NoneValueNotifier {
+  @override
+  build() {
+    /// initial
+
+    Logger().i("build Value Notifier");
+  }
+
 }
 
 @riverpod

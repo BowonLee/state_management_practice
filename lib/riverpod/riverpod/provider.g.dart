@@ -22,6 +22,22 @@ final valueNotifierProvider =
 );
 
 typedef _$ValueNotifier = AutoDisposeNotifier<int>;
+String _$noneValueNotifierHash() => r'f26b13cb5f935129aded805982c7aedc592e2b53';
+
+/// See also [NoneValueNotifier].
+@ProviderFor(NoneValueNotifier)
+final noneValueNotifierProvider =
+    AutoDisposeNotifierProvider<NoneValueNotifier, dynamic>.internal(
+  NoneValueNotifier.new,
+  name: r'noneValueNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$noneValueNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$NoneValueNotifier = AutoDisposeNotifier<dynamic>;
 String _$futureNotifierHash() => r'428e0af86f9935ce2f36bfcca66aaeedd81e09ec';
 
 /// See also [FutureNotifier].
