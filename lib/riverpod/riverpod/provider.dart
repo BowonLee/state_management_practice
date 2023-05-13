@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:state_management_practice/riverpod/riverpod/custom_exception.dart';
+import 'package:state_management_practice/riverpod/riverpod/repository.dart';
+import 'package:state_management_practice/riverpod/riverpod/provider_state.dart';
 
 part 'provider.g.dart';
 
@@ -19,7 +22,7 @@ String singleValueWithParam(Ref ref, {required int param}) {
 Future<String> futureValue(Ref ref) {
   return Future.delayed(
     const Duration(milliseconds: 500),
-        () => "Future is here",
+    () => "Future is here",
   );
 }
 
@@ -27,7 +30,7 @@ Future<String> futureValue(Ref ref) {
 Stream<int> streamValue(Ref ref) {
   return Stream.periodic(
     const Duration(milliseconds: 500),
-        (computationCount) {
+    (computationCount) {
       return computationCount;
     },
   );
@@ -60,7 +63,6 @@ class NoneValueNotifier extends _$NoneValueNotifier {
 
     Logger().i("build Value Notifier");
   }
-
 }
 
 @riverpod
@@ -90,9 +92,42 @@ class FutureNotifier extends _$FutureNotifier {
 }
 
 @riverpod
-class StreamNotifier extends _$StreamNotifier {
+class AsyncStateNotifier extends _$AsyncStateNotifier {
+  late final Repository repository;
+
   @override
-  Stream<int> build() async* {
-    yield 0;
+  FutureOr<BaseSampleState> build() async {
+    repository = ref.watch(repositoryProvider(ref));
+
+    return SampleLoading();
+  }
+
+  FutureOr<BaseSampleState> getData(
+      {bool occurCustomException = false, bool occurException = false}) async {
+    try {
+      if (occurCustomException) {
+        throw CustomException();
+      }
+
+      if (occurException) {
+        throw Exception();
+      }
+
+      repository.request();
+    } on CustomException catch (e) {
+      handleCustomException();
+    } on Exception catch (e) {
+      return SampleError();
+    }
+
+    return SampleSuccess();
+  }
+
+  void handleCustomException() {
+    // fake handle
+  }
+
+  void onSuccessProcess() {
+    // sample Method
   }
 }

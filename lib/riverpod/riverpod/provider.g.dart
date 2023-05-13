@@ -54,22 +54,23 @@ final futureNotifierProvider =
 );
 
 typedef _$FutureNotifier = AutoDisposeAsyncNotifier<int>;
-String _$streamNotifierHash() => r'5f985085c744e97127a0dc63ba1c027d4600b4ea';
+String _$asyncStateNotifierHash() =>
+    r'2f51b3d7507a14139ea2bdcf50ab377ca8840a29';
 
-/// See also [StreamNotifier].
-@ProviderFor(StreamNotifier)
-final streamNotifierProvider =
-    AutoDisposeNotifierProvider<StreamNotifier, Stream<int>>.internal(
-  StreamNotifier.new,
-  name: r'streamNotifierProvider',
+/// See also [AsyncStateNotifier].
+@ProviderFor(AsyncStateNotifier)
+final asyncStateNotifierProvider = AutoDisposeAsyncNotifierProvider<
+    AsyncStateNotifier, BaseSampleState>.internal(
+  AsyncStateNotifier.new,
+  name: r'asyncStateNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$streamNotifierHash,
+      : _$asyncStateNotifierHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$StreamNotifier = AutoDisposeNotifier<Stream<int>>;
+typedef _$AsyncStateNotifier = AutoDisposeAsyncNotifier<BaseSampleState>;
 String _$singleValueHash() => r'689092d17dce60a7fc8e0f5452e74ec5d0af8324';
 
 /// See also [singleValue].
