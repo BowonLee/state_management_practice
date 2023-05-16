@@ -78,6 +78,15 @@ class RiverpodMain extends StatelessWidget {
                       ));
                 },
                 child: const Text("future value notifier")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const _StateValueNotifierScreen(),
+                      ));
+                },
+                child: const Text("state value notifier")),
           ],
         ));
   }
@@ -238,6 +247,46 @@ class _FutureValueNotifierScreen extends ConsumerWidget {
                 valueNotifier.decrement();
               },
               child: const Text("decrement")),
+        ],
+      ),
+    );
+  }
+}
+
+class _StateValueNotifierScreen extends ConsumerWidget {
+  const _StateValueNotifierScreen({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final stateNotifier = ref.watch(sampleStateNotifierProvider.notifier);
+    final sampleState = ref.watch(sampleStateNotifierProvider);
+
+    /// state
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("future value notifier"),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Center(
+            child: Text(sampleState.toString()),
+          ),
+          ElevatedButton(
+              onPressed: () {
+                stateNotifier.getData();
+                // valueNotifier.increment();
+              },
+              child: const Text("getData")),
+          ElevatedButton(
+              onPressed: () {
+                // valueNotifier.decrement();
+              },
+              child: const Text("getData")),
         ],
       ),
     );

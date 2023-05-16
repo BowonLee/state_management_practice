@@ -92,35 +92,32 @@ class FutureNotifier extends _$FutureNotifier {
 }
 
 @riverpod
-class AsyncStateNotifier extends _$AsyncStateNotifier {
+class SampleStateNotifier extends _$SampleStateNotifier {
   late final Repository repository;
 
   @override
-  FutureOr<BaseSampleState> build() async {
-    repository = ref.watch(repositoryProvider(ref));
-
+  BaseSampleState build() {
+    repository = ref.watch(clientRepositoryProvider);
     return SampleLoading();
   }
 
-  FutureOr<BaseSampleState> getData(
-      {bool occurCustomException = false, bool occurException = false}) async {
+  getData({bool occurCustomException = false, bool occurException = false}) async {
     try {
       if (occurCustomException) {
         throw CustomException();
       }
-
       if (occurException) {
         throw Exception();
       }
-
-      repository.request();
+      await repository.request();
+      state = SampleSuccess();
     } on CustomException catch (e) {
       handleCustomException();
+      Logger().i("exp22");
     } on Exception catch (e) {
-      return SampleError();
+      Logger().i("exp");
+      state = SampleError();
     }
-
-    return SampleSuccess();
   }
 
   void handleCustomException() {

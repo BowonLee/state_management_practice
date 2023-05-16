@@ -54,23 +54,23 @@ final futureNotifierProvider =
 );
 
 typedef _$FutureNotifier = AutoDisposeAsyncNotifier<int>;
-String _$asyncStateNotifierHash() =>
-    r'2f51b3d7507a14139ea2bdcf50ab377ca8840a29';
+String _$sampleStateNotifierHash() =>
+    r'df54913213bd3a59c963677b1c2bad0edd3255b9';
 
-/// See also [AsyncStateNotifier].
-@ProviderFor(AsyncStateNotifier)
-final asyncStateNotifierProvider = AutoDisposeAsyncNotifierProvider<
-    AsyncStateNotifier, BaseSampleState>.internal(
-  AsyncStateNotifier.new,
-  name: r'asyncStateNotifierProvider',
+/// See also [SampleStateNotifier].
+@ProviderFor(SampleStateNotifier)
+final sampleStateNotifierProvider =
+    AutoDisposeNotifierProvider<SampleStateNotifier, BaseSampleState>.internal(
+  SampleStateNotifier.new,
+  name: r'sampleStateNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$asyncStateNotifierHash,
+      : _$sampleStateNotifierHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$AsyncStateNotifier = AutoDisposeAsyncNotifier<BaseSampleState>;
+typedef _$SampleStateNotifier = AutoDisposeNotifier<BaseSampleState>;
 String _$singleValueHash() => r'689092d17dce60a7fc8e0f5452e74ec5d0af8324';
 
 /// See also [singleValue].
