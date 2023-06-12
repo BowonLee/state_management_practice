@@ -17,24 +17,21 @@ void main() {
     int number = 0;
 
     setUp(() {
+      number = 1;
+    });
+
+    test("number is 1 ", () {
       number++;
+      expect(number, 2);
     });
 
     test("number is 1 ", () {
-      final testNumber = 1;
-
-      expect(testNumber, 1);
-    });
-
-    test("number is 1 ", () {
-      final testNumber = 1;
-
-      expect(testNumber, 1);
+      expect(number, 1);
     });
   });
 
   group("provider test", () {
-    final MockRepository repository = MockRepository();
+    final MockRepository mockRepository = MockRepository();
     final container = ProviderContainer();
     late SampleStateNotifier notifier;
 
@@ -45,37 +42,39 @@ void main() {
     group("request is success", () {
       setUp(() {
         notifier = container.read(sampleStateNotifierProvider.notifier);
-        // when(repository.request()).thenAnswer((realInvocation) => Future(() => null));
+        // when(mockRepository.request()).thenAnswer((realInvocation) => Future(() => null));
       });
       test("init", () {
         expect(notifier.state, isA<SampleLoading>());
       });
 
       test("success", () async {
+        const fakeCode = 100;
+        when(mockRepository.request()).thenReturn(Future.value(fakeCode));
         expect(notifier.state, isA<SampleLoading>());
-        // await notifier.getData();
-        expect(notifier.state, isA<SampleSuccess>());
-        // verify(notifier.onSuccessProcess());
-        // verifyNever(notifier.handleCustomException());
-      });
-
-      test("forceError", () async {
-        expect(notifier.state, isA<SampleLoading>());
-        // await notifier.getData(occurException: true);
-        expect(notifier.state, isA<SampleError>());
-        // verifyNever(notifier.onSuccessProcess());
-        // verify(notifier.handleCustomException());
+        await notifier.getData();
+        verify(mockRepository.request());
+        expect(
+            notifier.state, isA<SampleSuccess>().having((state) => state.code, "code", fakeCode));
       });
     });
 
     group("request is exception", () {
-      setUp(() {
-        // notifier = container.read(sampleStateNotifierProvider.notifier);
+      ProviderContainer container = ProviderContainer(
+          overrides: [clientRepositoryProvider.overrideWithValue(mockRepository)]);
+      when(mockRepository.request()).thenThrow(Exception());
+
+      setUp(() {});
+      test("request fail", () async {
+        final sampleState = container.read(sampleStateNotifierProvider.notifier);
+
+        expect(sampleState.state, isA<SampleLoading>());
+        await sampleState.getData();
+
+        expect(sampleState.state, isA<SampleError>());
       });
-      test("success", () async {
-        final container =
-            ProviderContainer(overrides: [clientRepositoryProvider.overrideWithValue(repository)]);
-        when(repository.request()).thenThrow(CustomException());
+
+      test("request is error", () async {
         final sampleState = container.read(sampleStateNotifierProvider.notifier);
 
         expect(sampleState.state, isA<SampleLoading>());

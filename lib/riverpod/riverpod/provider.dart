@@ -101,30 +101,15 @@ class SampleStateNotifier extends _$SampleStateNotifier {
     return SampleLoading();
   }
 
-  getData({bool occurCustomException = false, bool occurException = false}) async {
+  getData() async {
     try {
-      if (occurCustomException) {
-        throw CustomException();
-      }
-      if (occurException) {
-        throw Exception();
-      }
-      await repository.request();
-      state = SampleSuccess();
+      state = SampleLoading();
+      final resp = await repository.request();
+      state = SampleSuccess(code: resp);
     } on CustomException catch (e) {
-      handleCustomException();
-      Logger().i("exp22");
+      state = SampleError();
     } on Exception catch (e) {
-      Logger().i("exp");
       state = SampleError();
     }
-  }
-
-  void handleCustomException() {
-    // fake handle
-  }
-
-  void onSuccessProcess() {
-    // sample Method
   }
 }

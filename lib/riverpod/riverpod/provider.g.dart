@@ -55,7 +55,7 @@ final futureNotifierProvider =
 
 typedef _$FutureNotifier = AutoDisposeAsyncNotifier<int>;
 String _$sampleStateNotifierHash() =>
-    r'df54913213bd3a59c963677b1c2bad0edd3255b9';
+    r'0677629ee63c4608f009b6bfd00ccecefa44ee25';
 
 /// See also [SampleStateNotifier].
 @ProviderFor(SampleStateNotifier)

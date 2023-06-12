@@ -11,8 +11,9 @@ Repository clientRepository(Ref ref) {
 
 // fake repository
 class Repository {
-  Future<void> request() async {
+  Future<int> request() async {
     await Future.delayed(const Duration(seconds: 3));
     Logger().i("real request");
+    return 100;
   }
 }

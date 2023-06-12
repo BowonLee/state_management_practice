@@ -29,12 +29,11 @@ class MockRepository extends _i1.Mock implements _i2.Repository {
   }
 
   @override
-  _i3.Future<void> request() => (super.noSuchMethod(
+  _i3.Future<int> request() => (super.noSuchMethod(
         Invocation.method(
           #request,
           [],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i3.Future<int>.value(0),
+      ) as _i3.Future<int>);
 }
